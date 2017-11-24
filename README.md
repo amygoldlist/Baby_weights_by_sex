@@ -1,4 +1,4 @@
-# Baby_weights_by_sex
+# Baby weights by sex
 ## Do girls weigh more than boys at birth?
 ### Amy Goldlist
 
@@ -8,18 +8,20 @@ My hypothesis is that female babies weigh more than male babies at birth.
 
 I will analyze this data by creating some visualizations (histograms, and boxplots), which plot baby boys and girls separately.  Depending on my estimated summary statistics (as the weights are given as ranges, instead of exact weights), it may be appropriate to perform a t-test on the data to see if the distribution of male and female weights are different.
 
-Given enough time, I may look at the effect of time, over the 14 years that the project takes place.
+Given enough time, I may look at the effect of time, over the 14 years that the project takes place, as well as visualizing any effects of province.
 
 
 
-List of files:
+#### List of files:
 
 | file   | Description |
 |--------|-------------|
 | [README](README.md) |   *Overview of project*    |
-| [LICENSE](LICENSE.md) |   * license here*    |
-| [data](data) | *All documents go here* |
-| [doc](doc) | *Raw data goes here* |
-| [src](src) | *Source code goes here* |
-| [results](results) | *Results live here* |
-| [bin](bin) | *Executable code lives here* |
+| [LICENSE](LICENSE.md) |   *MIT license here*    |
+| [Raw data](data/01023509_eng.csv) | *Here is the CSV downloaded from the government website* |
+| [A basic script](src/Open_data.R) | *A script to open data and summarize.* |
+
+
+#### Details
+
+  The data used is licensed under an [Open Government License- Canada](http://open.canada.ca/en/open-government-licence-canada)
