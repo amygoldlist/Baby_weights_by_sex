@@ -4,7 +4,7 @@
 library(tidyverse)
 
 ##load data
-baby_data <- read_csv("results/baby_data.csv")
+baby_data <- read.csv("results/baby_data.csv")
 
  
 ##create barplot of baby weights by sex
