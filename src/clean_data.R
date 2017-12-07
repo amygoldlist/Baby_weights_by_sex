@@ -1,7 +1,8 @@
 library(tidyverse)
 library(stringr)
 
-raw_data <- read_csv("../data/01023509_eng.csv")
+
+raw_data <- read_csv("data/01023509_eng.csv")
 
 ##getwd()
 
@@ -30,6 +31,7 @@ baby_data <- baby_data %>%
 baby_data <- baby_data %>% 
   mutate(GEO = str_replace(GEO,pattern = ", place of residence of mother", replacement=""),
          BIRTHWEIGHT= str_replace(BIRTHWEIGHT,pattern = "Birth weight, ", replacement=""),
+         BIRTHWEIGHT = str_replace(BIRTHWEIGHT, pattern = ",", replacement =""),
          Weight_class =BIRTHWEIGHT) %>% 
   separate(BIRTHWEIGHT, c("Weight_low", "to", "Weight_high", "grams"))
 
@@ -53,7 +55,8 @@ baby_data <- baby_data%>%
 
 
 
+
 ##write data to a new csv
-write_csv(baby_data, "../results/baby_data.csv")
+write_csv(baby_data, "results/baby_data.csv")
 
 
