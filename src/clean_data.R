@@ -54,6 +54,7 @@ baby_data <- baby_data %>%
     Weight_low= as.character(Weight_low),
     Weight_low= as.integer(Weight_low),
     Weight_high = as.character(Weight_high),
+    Weight_high = forcats::fct_recode(Weight_high,"5575"= "more" ), #I've chosen an upper bound
     Weight_high= as.integer(Weight_high),
     Weight_mid = (Weight_high +Weight_low)/2)
 
