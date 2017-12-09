@@ -26,8 +26,8 @@ library(stringr)
 library(forcats)
 
 ##read in data
-##raw_data <- read_csv(input_file)
-raw_data <- read.csv("data/raw_baby.csv")
+raw_data <- read.csv(input_file)
+###raw_data <- read.csv("data/raw_baby.csv")
 
 
 
@@ -68,14 +68,13 @@ baby_data <- baby_data %>%
 
 
 
-
 ## Fix up the weights by extracting a boundary, and assigning each class a midpoint
 baby_data <- baby_data %>% 
   mutate(Weight_low= as.factor(Weight_low),
     Weight_low = forcats::fct_recode(Weight_low,"0"= "less" ),
     Weight_low= as.character(Weight_low),
     Weight_low= as.integer(Weight_low),
-    Weight_high = forcats::fct_recode(Weight_high,"5575"= "more" ), #I've chosen an upper bound
+    Weight_high = forcats::fct_recode(Weight_high,"5750"= "or" ), #I've chosen an upper bound
     Weight_high = as.character(Weight_high),
     Weight_high= as.integer(Weight_high),
     Weight_mid = (Weight_high +Weight_low)/2)

@@ -32,6 +32,7 @@ baby_data %>%
   head()
 
 
+
 summary_stats <- baby_data %>% 
   group_by(SEX) %>% 
   summarize(mean = sum(Weight_mid*Value)/sum(Value),
