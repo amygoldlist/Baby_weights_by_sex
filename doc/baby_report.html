@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>A Question: do weight differences between the sexes begin at birth?</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h2>A Question: do weight differences between the sexes begin at birth?</h2>
+
+<p>What are the differences between male and female babies at birth?  Is there a size difference? It is clear that adult males weigh more, on average than adult females, but what is unclear is whether this weight differnece is present from birth.  In fact, as a friend to manyy babies, it seems that annecdotally, people seem to think that baby girls might weigh more than baby boys.</p>
+
+<h2>Some data</h2>
+
+<p>In order to analyze this problem, I&#39;ve used the data set <a href="http://open.canada.ca/data/en/dataset/ea67173c-4f76-4259-83e5-557e97ae85fd">&ldquo;Live births, by birth weight and sex, Canada, provinces and territories&rdquo;</a> available through the Government of Canada Open Data website.  This dataset contains data on babies born between 2000 and 2014, classified by sex and weight range, as well as the province or territory of birth.  In order to have clean analysis, I have cleaned the data to omit any unclassified babies (some homebirths are not catagorized by weight).Since the data is grouped in classes, instead of having exact weights, I&#39;ve assigned each weight class a midpoint, in order to treat the data as quantitative data.  This is a large dataset, with around 9000 classes representing about 5.38 million Canadian babies.</p>
+
+<h2>A hypothesis.</h2>
+
+<p>I was working from the assumption that female babies weigh more on average at birth than male babies, however, in order to rigorously test my hypothesis, I have tested the null hypothesis that the average weight of male babies is the same as the average weight of female babies.</p>
+
+<h2>First, a visualization:</h2>
+
+<p><img src="results/images/baby_histogram.png" alt=""/></p>
+
+<p>Right away, it is clear that both the male and female distributions are approximately normal.  However, it seems like the normal curve for the male baby weights is further to the right than the female weight curve.  We can see this more clearly by looking at the summary statistics for the dataset:</p>
+
+<pre><code>##       SEX     mean variance standard_deviation   count
+## 1 Females 3316.408 325697.2           570.6989 2619639
+## 2   Males 3431.969 361956.1           601.6279 2759839
+</code></pre>
+
+<p>All units are in grams.  This sumamry shows us that the mean weight of male babies is slightly higher for male babies as for female babies. Right away, I will admit that my hypothesis, which was based on anecdotes, is probably not correct.  It is more likely that male babies weigh more on average than female babies, and indeed, since our data set is so large, we will be able to show this, even though the difference in average weights is only 115.56 grams.</p>
+
+<h2>Some Statistics</h2>
+
+<p>This problem is a textbook example of when we can do a t test of two samples with pooled variances.  As we can see from the above table, the variances are quite close, and as the histogram shows us, both distributions are approximately normal.  Using the base formulae, since we are working on grouped data, our test has a very large negative t test of: </p>
+
+<pre><code>## [1] -228.3171
+</code></pre>
+
+<p>Which unsurprisingly has a p-value of:</p>
+
+<pre><code>## [1] 0
+</code></pre>
+
+<p>This shows that there is overwhelming evidence that average weight of male babies is not equal to the average weight of female babies. (p&lt;0.0001)</p>
+
+<h2>A conclusion</h2>
+
+<p>It is clear from the size and completeness of our dataset, and the largeness of the test statistic that female babies and male babies do not have the same average weight at birth.  This is statistically significant, but is it actually significant?  I believe that it is, A difference of over 100 grams is significant in very small babies, who may way only 2000 grms or less at birth.  So even though it turns out that my hypothesis was incorrect, we have been able to find a difference in baby weights between the two sexes.</p>
+
+</body>
+
+</html>
