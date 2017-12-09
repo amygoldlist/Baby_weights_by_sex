@@ -26,21 +26,15 @@ library(stringr)
 library(forcats)
 
 ##read in data
-raw_data <- read_csv(input_file)
-##raw_data <- read_csv("data/raw_baby.csv")
+##raw_data <- read_csv(input_file)
+raw_data <- read.csv("data/raw_baby.csv")
 
 
-##change types to factor to recode properly
-baby_data <- raw_data %>% 
-  mutate(SEX = as.factor(SEX),
-         GEO = as.factor(GEO),
-         BIRTHWEIGHT = as.factor(BIRTHWEIGHT),
-         UNIT = as.factor(UNIT))  
 
 
 
 ##get rid of the summary data, iun order to clean the analysis
-baby_data <- baby_data %>% 
+baby_data <- raw_data %>% 
   filter(SEX != "Both sexes") %>% 
   filter(GEO != "Canada, place of residence of mother") %>% 
   filter(BIRTHWEIGHT !="Total, birth weight") %>% 
@@ -54,6 +48,7 @@ baby_data <- baby_data %>%
 
 
 
+
 ##get rid of extra characters, in order to recode birth weight as numeric
 baby_data <- baby_data %>% 
   mutate(GEO = str_replace(GEO,pattern = ", place of residence of mother", replacement=""),
@@ -64,29 +59,37 @@ baby_data <- baby_data %>%
   separate(BIRTHWEIGHT, c("Weight_low", "to", "Weight_high", "grams"))
 
 
+## get types back to the correct place
+baby_data <- baby_data %>%  
+  mutate(GEO = as.factor(GEO),
+         Weight_class = as.factor(Weight_class),
+         Value = as.character(Value),
+         Value = as.integer(Value))  
 
-## Fix up the weights by extracting a boundary, adn assigning each class a midpoint
+
+
+
+## Fix up the weights by extracting a boundary, and assigning each class a midpoint
 baby_data <- baby_data %>% 
   mutate(Weight_low= as.factor(Weight_low),
     Weight_low = forcats::fct_recode(Weight_low,"0"= "less" ),
     Weight_low= as.character(Weight_low),
     Weight_low= as.integer(Weight_low),
-    Weight_high = as.character(Weight_high),
     Weight_high = forcats::fct_recode(Weight_high,"5575"= "more" ), #I've chosen an upper bound
+    Weight_high = as.character(Weight_high),
     Weight_high= as.integer(Weight_high),
     Weight_mid = (Weight_high +Weight_low)/2)
 
 
 
-##Get everything as the correct type, in order to analyze 
+
+##Get everything as the correct type, in order to analyze, and kill the NA values in Value 
 baby_data <- baby_data%>% 
   select(Ref_Date, GEO, SEX, Weight_class, Weight_low, Weight_high, Weight_mid, Value) %>% 
-  mutate(GEO =as.factor(GEO),
-         Weight_class= as.factor(Weight_class))
-
-##get rid of NA values in Value.
-baby_data <- baby_data %>% 
+  mutate(Weight_class= as.factor(Weight_class)) %>% 
   filter(Value>= 0)
+
+  
 
 ##relevel the birthweights properly, so that we can create graphics
 baby_data <- baby_data %>% 
