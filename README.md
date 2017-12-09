@@ -4,24 +4,38 @@
 
 What are the differences between male and female babies at birth?  Is there a size difference?  I've used the data set ["Live births, by birth weight and sex, Canada, provinces and territories"](http://open.canada.ca/data/en/dataset/ea67173c-4f76-4259-83e5-557e97ae85fd) available through the Government of Canada Open Data website.  This dataset contains data on babies born between 2000 and 2014, classified by sex and weight range.
 
-My hypothesis is that female babies weigh more than male babies at birth.  
+My hypothesis on starting was that female babies weigh more than male babies at birth, but in fact my analysis has shown that male babies weigh more on average than female babies at birth!
 
-I will analyze this data by creating some visualizations (histograms, and boxplots), which plot baby boys and girls separately.  Depending on my estimated summary statistics (as the weights are given as ranges, instead of exact weights), it may be appropriate to perform a t-test on the data to see if the distribution of male and female weights are different.
-
-Given enough time, I may look at the effect of time, over the 14 years that the project takes place, as well as visualizing any effects of province.
+In the next release, I would like to look at the effect of province or territory or birth on birthweights.
 
 
+### To Run:
 
-#### List of files:
+Clone the repo, and run the make file using the command
+```
+make all
+```
+This will clean the data, create images, and run the analysis.  It will them compile this into a report.
+
+#### List of key files:
 
 | file   | Description |
 |--------|-------------|
 | [README](README.md) |   *Overview of project*    |
 | [LICENSE](LICENSE.md) |   *MIT license here*    |
-| [Raw data](data/01023509_eng.csv) | *Here is the CSV downloaded from the government website* |
-| [A basic script](src/Open_data.R) | *A script to open data and summarize.* |
+| [Report](doc/baby_report.md) | *A completed report on baby weights* |
 
+#### Dependencies
+The analysis is done with R, (3.4.3), with the following packages:
+* library(tidyverse)
+* library(stringr)
+* library(forcats)
+* library(SDMTools)
+* library(scales)
+* library(ezknitr)
 
-#### Details
+The documents are rendered with Make.
+
+#### Licensing Details
 
   The data used is licensed under an [Open Government License- Canada](http://open.canada.ca/en/open-government-licence-canada)
