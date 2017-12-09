@@ -1,17 +1,36 @@
 
+##clean_data.R
+##by Amy Goldlist, Decmenber 2017
+
+## Usage:  Rscript src/clean_data.R $orig_filename $new_filename
+## the original filename is "data/raw_baby.csv" 
+## the target filename is "results/baby_data.csv"
+
+
+
+
+## This script takes the raw data from Stats Canada, and cleans it up
+## In particular, the csv contains summary data mixed in with actual data.
+## As well, the weights are recorded as a string, and we will extract numbers
+
+
+# read in command line argument
+args <- commandArgs(trailingOnly = TRUE)
+input_file <- args[1]
+output_file <- args[2]
+
 
 ###load libraries
 library(tidyverse)
 library(stringr)
 library(forcats)
 
+##read in data
+raw_data <- read_csv(input_file)
+##raw_data <- read_csv("data/raw_baby.csv")
 
-raw_data <- read_csv("data/01023509_eng.csv")
 
-
-
-##change types to factor to recode
-
+##change types to factor to recode properly
 baby_data <- raw_data %>% 
   mutate(SEX = as.factor(SEX),
          GEO = as.factor(GEO),
@@ -20,8 +39,7 @@ baby_data <- raw_data %>%
 
 
 
-
-##get rid of the summary data
+##get rid of the summary data, iun order to clean the analysis
 baby_data <- baby_data %>% 
   filter(SEX != "Both sexes") %>% 
   filter(GEO != "Canada, place of residence of mother") %>% 
@@ -36,7 +54,7 @@ baby_data <- baby_data %>%
 
 
 
-##get rid of extra characters!
+##get rid of extra characters, in order to recode birth weight as numeric
 baby_data <- baby_data %>% 
   mutate(GEO = str_replace(GEO,pattern = ", place of residence of mother", replacement=""),
          BIRTHWEIGHT= str_replace(BIRTHWEIGHT,pattern = "Birth weight, ", replacement=""),
@@ -47,7 +65,7 @@ baby_data <- baby_data %>%
 
 
 
-##fix up those pesky weights!  
+## Fix up the weights by extracting a boundary, adn assigning each class a midpoint
 baby_data <- baby_data %>% 
   mutate(Weight_low= as.factor(Weight_low),
     Weight_low = forcats::fct_recode(Weight_low,"0"= "less" ),
@@ -60,26 +78,22 @@ baby_data <- baby_data %>%
 
 
 
-##Get everything as the correct type 
+##Get everything as the correct type, in order to analyze 
 baby_data <- baby_data%>% 
   select(Ref_Date, GEO, SEX, Weight_class, Weight_low, Weight_high, Weight_mid, Value) %>% 
   mutate(GEO =as.factor(GEO),
          Weight_class= as.factor(Weight_class))
 
-##get rid of NA values in Value
+##get rid of NA values in Value.
 baby_data <- baby_data %>% 
   filter(Value>= 0)
 
-##recode the birthweights properly
-#levels(baby_data$Weight_class)
-
+##relevel the birthweights properly, so that we can create graphics
 baby_data <- baby_data %>% 
   mutate(Weight_class = fct_relevel(Weight_class,c("less than 500 grams", "750 to 999 grams" )))
 
 
-
-
 ##write data to a new csv
-write_csv(baby_data, "results/baby_data.csv")
+write_csv(baby_data, output_file)
 
 
