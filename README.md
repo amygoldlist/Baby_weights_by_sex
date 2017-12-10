@@ -15,18 +15,22 @@ Clone the repo, and run the make file using the command
 ```
 make all
 ```
-This will clean the data, create images, and run the analysis.  It will them compile this into a report.
+This will clean the data, create images, and run the analysis.  It will them compile this into a report.  The Make file runs the data as in this dependency graph:
 
-#### List of key files:
+![](results/images/make_graph.png)
+
+### List of key files:
 
 | file   | Description |
 |--------|-------------|
 | [README](README.md) |   *Overview of project*    |
 | [LICENSE](LICENSE.md) |   *MIT license here*    |
 | [Report](doc/baby_report.md) | *A completed report on baby weights* |
+| [Makefile](Makefile) | *A make file to run everything*
 
-#### Dependencies
+### Dependencies
 The analysis is done with R, (3.4.3), with the following packages:
+
 * library(tidyverse)
 * library(stringr)
 * library(forcats)
@@ -36,6 +40,6 @@ The analysis is done with R, (3.4.3), with the following packages:
 
 The documents are rendered with Make.
 
-#### Licensing Details
+### Licensing Details
 
   The data used is licensed under an [Open Government License- Canada](http://open.canada.ca/en/open-government-licence-canada)
