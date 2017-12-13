@@ -42,4 +42,5 @@ clean:
 	rm -f results/images/baby_histogram.png
 	rm -f results/test_values.txt
 	rm -f doc/baby_report.md
+	rm -f doc/baby_report.html
 	rm -f results/images/make_graph.png
