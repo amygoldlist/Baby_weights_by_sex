@@ -8,7 +8,7 @@
 ### runs a t test to show that there is a diffenrece in baby wieghts by sex
 
 ##run top to bottom
-all: doc/baby_report.md
+all: doc/baby_report.md results/images/make_graph.png
 
 ## clean data
 results/baby_data.csv: data/raw_baby.csv src/clean_data.R
@@ -30,6 +30,10 @@ results/test_values.txt: results/summary_stats.csv src/t-test.R
 doc/baby_report.md: src/baby_report.Rmd results/summary_stats.csv results/test_values.txt results/images/baby_histogram.png
 	Rscript -e "ezknitr::ezknit('src/baby_report.Rmd', out_dir = 'doc')"
 
+##create make_graph
+results/images/make_graph.png: Makefile
+	make -Bnd | make2graph | dot -Tpng -o results/images/make_graph.png
+
 
 ##clean up intermediate files.
 clean:
@@ -38,3 +42,4 @@ clean:
 	rm -f results/images/baby_histogram.png
 	rm -f results/test_values.txt
 	rm -f doc/baby_report.md
+	rm -f results/images/make_graph.png
