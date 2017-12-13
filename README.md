@@ -11,13 +11,15 @@ In the next release, I would like to look at the effect of province or territory
 
 ### To Run:
 
-Clone the repo, and run the make file using the command
+Clone the repo, and run the make file from the root directory of the cloned repo by using the command
 ```
 make all
 ```
 This will clean the data, create images, and run the analysis.  It will them compile this into a report.  The Make file runs the data as in this dependency graph:
 
 ![](results/images/make_graph.png)
+
+Check out the list of dependencies below, you may wish to use my docker container to run.
 
 ### List of key files:
 
@@ -39,6 +41,28 @@ The analysis is done with R, (3.4.3), with the following packages:
 * library(ezknitr)
 
 The documents are rendered with Make.
+
+The above graph is created with makefile2graph.
+
+#### packrat
+
+In order to run the R packages above, packrat is included.  If you open [the Rproj file](Baby_weights_by_sex.Rproj), then packrat will be installed, and you will not have to install the correct packages
+
+#### Docker
+
+If you would like to run the complete report without any installs, use my docker container available on dockerhub as: `goldlist\baby_weights_by_sex`.  Once this is built, you can run the make file using the following command:
+
+`
+docker run --rm -v C:/Users/path/to/repo/Baby_weights_by_sex:/home/baby_weights_by_sex goldlist/baby_weights_by_sex make -C '/home/baby_weights_by_sex'
+`
+
+To clean all the created files, run:
+
+`
+docker run --rm -v C:/Users/path/to/repo/Baby_weights_by_sex:/home/baby_weights_by_sex goldlist/baby_weights_by_sex make -C '/home/baby_weights_by_sex' clean
+`
+
+Make sure you replace the string `C:/Users/path/to/repo/Baby_weights_by_sex` with the path to the cloned repo on your own computer.
 
 ### Licensing Details
 
