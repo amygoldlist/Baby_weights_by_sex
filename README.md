@@ -61,21 +61,6 @@ The above graph is created with makefile2graph.
 
 In order to run the R packages above, packrat is included.  If you open [the Rproj file](Baby_weights_by_sex.Rproj), then packrat will be installed, and you will not have to install the correct packages
 
-#### Docker
-
-If you would like to run the complete report without any installs, use my docker container available on dockerhub as: `goldlist\baby_weights_by_sex`.  Once this is built, you can run the make file using the following command:
-
-`
-docker run --rm -v C:/Users/path/to/repo/Baby_weights_by_sex:/home/baby_weights_by_sex goldlist/baby_weights_by_sex make -C '/home/baby_weights_by_sex'
-`
-
-To clean all the created files, run:
-
-`
-docker run --rm -v C:/Users/path/to/repo/Baby_weights_by_sex:/home/baby_weights_by_sex goldlist/baby_weights_by_sex make -C '/home/baby_weights_by_sex' clean
-`
-
-Make sure you replace the string `C:/Users/path/to/repo/Baby_weights_by_sex` with the path to the cloned repo on your own computer.
 
 ### Licensing Details
 
