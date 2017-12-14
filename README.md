@@ -11,7 +11,20 @@ In the next release, I would like to look at the effect of province or territory
 
 ### To Run:
 
-Clone the repo, and run the make file from the root directory of the cloned repo by using the command
+1. Clone the repo.
+
+2. You will need to have docker installed and running on your computer.
+
+3. First, pull my docker image from dockerhub: `docker pull goldlist/baby_weights_by_sex`
+
+4. Run the make file by running in the command line:
+`docker run --rm -v C:/Users/path/to/repo/Baby_weights_by_sex:/home/baby_weights_by_sex goldlist/baby_weights_by_sex make -C '/home/baby_weights_by_sex' `
+
+5. To clean the files, simply run `docker run --rm -v C:/Users/path/to/repo/Baby_weights_by_sex:/home/baby_weights_by_sex goldlist/baby_weights_by_sex make -C '/home/baby_weights_by_sex' clean `
+
+6. In steps 4 and 5, make sure to replace `C:/Users/path/to/repo/Baby_weights_by_sex` with the path to the cloned repo on your computer.
+
+If you don't want to use docker, you can and run the make file from the root directory of the cloned repo by using the command
 ```
 make all
 ```
@@ -19,7 +32,7 @@ This will clean the data, create images, and run the analysis.  It will them com
 
 ![](results/images/make_graph.png)
 
-Check out the list of dependencies below, you may wish to use my docker container to run.
+But remember to check out the list of dependencies below.
 
 ### List of key files:
 
